@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">BodyFit</string>
+    <string name="twitter_key">	Hs0vYcRcWXF9wHVnnj4rqR3Xy</string>
+    <string name="twitter_secret">94xJPQPPz8uXWPmwubShIi5zpCoXE7o8JdrwrNJ22BBAf5IEIG</string>
+    <string name="facebook_sha">ga0RGNYHvNM5d0SLGQfpQWAPGJ8=</string>
+    <string name="invalid_mail">Please input your email</string>
+    <string name="invalid_password">Please input password</string>
+    <string name="invalid_social_user">Social network login error</string>
+    <string name="sign_in_label">Sign In</string>
+    <string name="email_hint">E-mail</string>
+    <string name="password_hint">Password</string>
+    <string name="sign_in_facebook">Facebook</string>
+    <string name="sign_in_google">Google</string>
+    <string name="sign_in_twitter">Twitter</string>
+    <string name="or_sign_in_with">Or sign in with:</string>
+    <string name="facebook">Facebook</string>
+    <string name="google">Google</string>
+    <string name="twitter">Twitter</string>
+    <string name="new_user">New User?</string>
+    <string name="sign_in_register">Sign Up</string>
+    <string name="progress_text">Loading</string>
+    <string name="network_auth_error">Failed to retrieve data</string>
+    <string name="permission_error_title">Permissions Required</string>
+    <string name="permission_app_error">You must grant all required permissions</string>
 </resources>

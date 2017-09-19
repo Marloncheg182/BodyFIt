@@ -4,27 +4,55 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     defaultConfig {
-        applicationId "com.goodguys.bodyfit"
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
+    signingConfigs {
+        debug {
+            keyAlias 'bodyfit'
+            keyPassword '69938923'
+            storeFile file('D:/projects/BodyFit/keystore/bodyfit_keystore.jks')
+            storePassword '69938923'
+        }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            keyAlias 'bodyfit'
+            keyPassword '69938923'
+            storeFile file('D:/projects/BodyFit/keystore/bodyfit_keystore.jks')
+            storePassword '69938923'
         }
     }
-    compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def name = new String("decideddiet");
+                    output.outputFile = new File(output.outputFile.parent,
+                            output.outputFile.name.replace("app-release", "" + name))
+                    output.outputFile = new File(output.outputFile.parent,
+                            output.outputFile.name.replace("app-debug", "" + name))
+                }
+                debug {
+                    signingConfig signingConfigs.debug
+                }
+            }
+            compileOptions {
+                sourceCompatibility JavaVersion.VERSION_1_8
+                targetCompatibility JavaVersion.VERSION_1_8
+            }
+        }
+    }
+    productFlavors {
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -52,10 +80,14 @@ dependencies {
     compile 'com.google.android.gms:play-services-base:11.0.4'
     compile 'com.google.firebase:firebase-core:11.0.4'
     compile 'com.google.firebase:firebase-messaging:11.0.4'
-    compile "org.androidannotations:androidannotations-api:4.3.1"
+    compile 'com.twitter.sdk.android:twitter-core:3.1.1'
+    compile 'com.twitter.sdk.android:tweet-ui:3.1.1'
+    compile 'com.twitter.sdk.android:tweet-composer:3.1.1'
+    compile 'org.androidannotations:androidannotations-api:4.3.1'
     compile 'com.squareup:otto:1.3.8'
-    compile group: 'com.google.dagger', name: 'dagger', version: '2.11'
+    compile 'com.google.dagger:dagger:2.11'
     annotationProcessor "org.androidannotations:androidannotations:4.3.1"
     annotationProcessor 'com.arello-mobile:moxy-compiler:1.5.3'
     testCompile 'junit:junit:4.12'
 }
+apply plugin: 'com.google.gms.google-services'

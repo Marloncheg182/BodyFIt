@@ -1,0 +1,131 @@
+package com.goodguys.bodyfit.mvp.presenters;
+
+import android.text.TextUtils;
+
+import com.arellomobile.mvp.InjectViewState;
+import com.goodguys.bodyfit.R;
+import com.goodguys.bodyfit.app.BodyFitApplication;
+import com.goodguys.bodyfit.common.Utils;
+import com.goodguys.bodyfit.mvp.BodyFitRepository;
+import com.goodguys.bodyfit.mvp.common.AuthUtils;
+import com.goodguys.bodyfit.mvp.models.auth.signin.SignInRegularRequest;
+import com.goodguys.bodyfit.mvp.models.auth.signin.SignInSocialRequest;
+import com.goodguys.bodyfit.mvp.models.auth.signup.SignUpSocialRequest;
+import com.goodguys.bodyfit.mvp.views.SignInView;
+
+import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
+
+/**
+ * Created by Oleg Romanenchuk on 18.09.2017.
+ */
+
+@InjectViewState
+public class SignInPresenter extends BasePresenter<SignInView>{
+
+    @Inject
+    BodyFitRepository mBodyFitRepository;
+
+    public SignInPresenter(){
+        BodyFitApplication.getAppComponent().inject(this);
+    }
+
+    public void signInRegular(String email, String password){
+        Integer emailError = null;
+        Integer passwordError = null;
+
+        getViewState().hideFormError();
+
+        if (TextUtils.isEmpty(email)){
+            emailError = R.string.invalid_mail;
+        }
+        if (TextUtils.isEmpty(password)){
+            passwordError = R.string.invalid_password;
+        }
+
+        if (emailError != null || passwordError != null){
+            getViewState().showRegularFormError(emailError, passwordError);
+            return;
+        }
+
+        getViewState().startSignIn();
+// sign up if user exist
+        Disposable disposable = mBodyFitRepository.signInRegular(new SignInRegularRequest(email, password))
+                .doOnNext(authResponse -> AuthUtils.setToken(authResponse.getToken()))
+                .compose(Utils.applySchedulers())
+                .subscribe(authResponse -> {
+                    getViewState().finishSignIn();
+                    getViewState().startSignIn();
+                }, throwable -> {
+                    getViewState().finishSignIn();
+                    getViewState().failedSignIn(throwable.getMessage());
+                });
+
+        unsubscribeOnDestroy(disposable);
+    }
+
+    public void signInSocial(String network, String networkKey){
+        Integer networkKeyError = null;
+
+        getViewState().hideFormError();
+
+        if (!TextUtils.isEmpty(networkKey)){
+            networkKeyError = R.string.invalid_social_user;
+        }
+
+        if (networkKeyError != null){
+            getViewState().showNetworkFormError(networkKeyError);
+            return;
+        }
+
+        getViewState().startSignIn();
+
+        Disposable disposable = mBodyFitRepository.signInSocial(new SignInSocialRequest(network, networkKey))
+                .doOnNext(authResponse -> AuthUtils.setToken(authResponse.getToken()))
+                .compose(Utils.applySchedulers())
+                .subscribe(authResponse -> {
+                    getViewState().finishSignIn();
+                    getViewState().successSignIn();
+                }, throwable -> {
+                    getViewState().finishSignIn();
+                    getViewState().failedSignIn(throwable.getMessage());
+                });
+
+        unsubscribeOnDestroy(disposable);
+    }
+
+    public void signUpSocial(String network, String networkKey){
+        Integer networkKeyError = null;
+
+        getViewState().hideFormError();
+
+        if (TextUtils.isEmpty(networkKey)) {
+            networkKeyError = R.string.invalid_social_user;
+        }
+
+        if (networkKeyError != null) {
+            getViewState().showNetworkFormError(networkKeyError);
+            return;
+        }
+
+        getViewState().startSignUp();
+
+        Disposable disposable = mBodyFitRepository.signUpSocial(new SignUpSocialRequest(network, networkKey))
+                .doOnNext(authResponse -> AuthUtils.setToken(authResponse.getToken()))
+                .compose(Utils.applySchedulers())
+                .subscribe(authResponse -> {
+                    getViewState().finishSignUp();
+                    getViewState().successSignUp();
+                }, throwable -> {
+                    getViewState().finishSignUp();
+                    getViewState().failedSignUp(throwable.getMessage());
+                });
+
+        unsubscribeOnDestroy(disposable);
+    }
+
+    public void onErrorCancel() {
+        getViewState().hideError();
+    }
+}
