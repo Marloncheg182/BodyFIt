@@ -6,26 +6,22 @@ import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
 /**
- * Created by Oleg Romanenchuk on 19.09.2017.
+ * Created by Oleg Romanenchuk on 23.09.2017.
  */
 
 @StateStrategyType(AddToEndSingleStrategy.class)
-public interface SignUpView extends MvpView{
+public interface HomeView extends MvpView{
 
-    void startSignUp();
+    void startLoadUserStatistics();
 
-    void finishSignUp();
+    void finishLoadUserStatistics();
 
-    void failedSignUp(String message);
+    void failedLoadUserStatistics(String message);
 
     void hideError();
 
-    void hideFormError();
-
-    void showFormError(Integer emailError, Integer passwordError);
-
-    void sendSignUpSuccessNotification();
-
     @StateStrategyType(SkipStrategy.class)
-    void successSignUp();
+    void successLoadUserStatistics();
+
 }
+

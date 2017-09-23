@@ -3,6 +3,8 @@
     <string name="twitter_key">	Hs0vYcRcWXF9wHVnnj4rqR3Xy</string>
     <string name="twitter_secret">94xJPQPPz8uXWPmwubShIi5zpCoXE7o8JdrwrNJ22BBAf5IEIG</string>
     <string name="facebook_sha">ga0RGNYHvNM5d0SLGQfpQWAPGJ8=</string>
+    <string name="facebook_app_id">1622177274509922</string>
+    <string name="fb_login_protocol_scheme">fb1622177274509922</string>
     <string name="invalid_mail">Please input your email</string>
     <string name="invalid_password">Please input password</string>
     <string name="invalid_social_user">Social network login error</string>
@@ -22,4 +24,16 @@
     <string name="network_auth_error">Failed to retrieve data</string>
     <string name="permission_error_title">Permissions Required</string>
     <string name="permission_app_error">You must grant all required permissions</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="sign_up_label">Sign Up</string>
+    <string name="new_user_label">Create New Account</string>
+    <string name="reset_password_success">We have sent you an email with instructions, how to reset your current password</string>
+    <string name="reset_pass_hint">To reset password, please type your email and press Confirm button</string>
+    <string name="reset_password">Confirm</string>
+    <string name="update_menu">Check for Updates</string>
+    <string name="logout_text">Sign Out</string>
+    <string name="open_profile_text">Open profile</string>
+    <string name="notification_sign_up_title">BodyFit Notification</string>
+    <string name="notification_sign_up_message">Congratulations, you are registered in BodyFit system</string>
+    <string name="okay">OK</string>
 </resources>

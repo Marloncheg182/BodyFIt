@@ -4,19 +4,18 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.arellomobile.mvp.MvpFragment;
+import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -27,16 +26,17 @@ import com.facebook.login.LoginResult;
 import com.goodguys.bodyfit.R;
 import com.goodguys.bodyfit.common.CheckNull;
 import com.goodguys.bodyfit.common.Constants;
+import com.goodguys.bodyfit.mvp.presenters.ResetPasswordPresenter;
 import com.goodguys.bodyfit.mvp.presenters.SignInPresenter;
 import com.goodguys.bodyfit.mvp.ui.activities.AuthActivity;
+import com.goodguys.bodyfit.mvp.ui.activities.HomeActivity_;
+import com.goodguys.bodyfit.mvp.ui.activities.TutorialActivity_;
 import com.goodguys.bodyfit.mvp.ui.dialogs.BodyFitProgressDialog;
+import com.goodguys.bodyfit.mvp.views.ResetPasswordView;
 import com.goodguys.bodyfit.mvp.views.SignInView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -48,6 +48,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.res.ColorRes;
 import org.androidannotations.annotations.res.StringRes;
 
 import java.util.ArrayList;
@@ -58,42 +59,54 @@ import java.util.List;
  */
 
 @EFragment(R.layout.sign_in_fragment)
-public class SignInFragment extends MvpFragment implements SignInView {
+public class SignInFragment extends MvpAppCompatFragment implements SignInView, ResetPasswordView {
     private static final String LOG_TAG = "SignInFragment";
+    @InjectPresenter
+    SignInPresenter mSignInPresenter;
+
+    @InjectPresenter
+    ResetPasswordPresenter mResetPasswordPresenter;
+
     private static final int GOOGLE_NETWORK = 201;
     private static final int FACEBOOK_NETWORK = 202;
     private static final int TWITTER_NETWORK = 203;
     @ViewById(R.id.sign_in_email_et)
     EditText mEmailEt;
+    @ViewById(R.id.sign_in_email_input_layout)
+    TextInputLayout mEmailInputLayout;
     @ViewById(R.id.sign_in_password)
     EditText mPasswordEt;
+    @ViewById(R.id.sign_in_password_input_layout)
+    TextInputLayout mPasswordInputLayout;
     @ViewById(R.id.sign_in_button)
     Button mSignIngBtn;
     @ViewById(R.id.sign_in_register)
     TextView mSignUpBtn;
     @ViewById(R.id.sign_in_facebook)
-    Button mFacebookBtn;
+    LinearLayout mFacebookBtn;
     @ViewById(R.id.sign_in_google)
-    Button mGoogleBtn;
+    LinearLayout mGoogleBtn;
     @ViewById(R.id.sign_in_twitter)
-    Button mTwitterBtn;
+    LinearLayout mTwitterBtn;
+    @ViewById(R.id.reset_pass_tv)
+    TextView mForgotPassword;
     @StringRes(R.string.network_auth_error)
     String networkError;
     @StringRes(R.string.permission_error_title)
     String permissionGrantedTitle;
     @StringRes(R.string.permission_app_error)
     String appPermissionError;
+    @ColorRes(R.color.colorAccent)
+    int textColorRes;
     private BodyFitProgressDialog mProgressDialog;
     private AlertDialog mErrorDialog;
     private AlertDialog mSocialErrorDialog;
     private AuthActivity mActivity;
     private CallbackManager mCallbackManager;
-    private GoogleApiClient mGoogleApiClient;
     private TwitterAuthClient mTwitterAuthClient;
     private AlertDialog mPermissionDialog;
     private int mLoginCode;
-    @InjectPresenter
-    SignInPresenter mSignInPresenter;
+    private ResetPasswordDialog_ mResetPasswordDialog;
 
     @Override
     public void onAttach(Context context) {
@@ -103,22 +116,21 @@ public class SignInFragment extends MvpFragment implements SignInView {
     }
 
     @AfterViews
-    public void requestPermissions(){
+    public void requestPermissions() {
         Log.d(LOG_TAG, "requestPermissions");
         initPermissionsDialog();
+        mProgressDialog = new BodyFitProgressDialog(mActivity, R.style.BodyFitDialog);
         RxPermissions permissions = new RxPermissions(mActivity);
         permissions
                 .request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
                 .subscribe(granted -> {
                     if (!granted) {
                         mPermissionDialog.show();
-                    }else {
+                    } else {
                         initCallbacks();
                     }
                 });
     }
-
-    //TODO reset password dialog integration (email)
 
     private void initPermissionsDialog() {
         Log.d(LOG_TAG, "initPermissionsDialog");
@@ -146,12 +158,9 @@ public class SignInFragment extends MvpFragment implements SignInView {
                 .create();
     }
 
-    public void initCallbacks() {
+    private void initCallbacks() {
         Log.d(LOG_TAG, "initCallbacks");
         initFacebook();
-        initGoogle();
-        mProgressDialog = new BodyFitProgressDialog(mActivity, R.style.BodyFitDialog);
-        mPasswordEt.setTransformationMethod(new PasswordTransformationMethod());
         mPasswordEt.setOnEditorActionListener((textView, id, event) -> {
             if (id == R.id.sign_in_password || id == EditorInfo.IME_NULL) {
                 signIn();
@@ -189,23 +198,6 @@ public class SignInFragment extends MvpFragment implements SignInView {
                 });
     }
 
-    private void initGoogle() {
-        Log.d(LOG_TAG, "initGoogle");
-        GoogleSignInOptions mGoogleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-        mGoogleApiClient = new GoogleApiClient.Builder(mActivity)
-                .enableAutoManage(mActivity, new GoogleApiClient.OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        Log.d(LOG_TAG, "initGoogle - onConnectionFailed");
-                        failedSignIn(connectionResult.getErrorMessage());
-                    }
-                })
-                .addApi(Auth.GOOGLE_SIGN_IN_API, mGoogleSignInOptions)
-                .build();
-    }
 
     private void handleGoogleSignInResult(GoogleSignInResult result) {
         Log.d(LOG_TAG, "handleGoogleSignInResult");
@@ -222,7 +214,9 @@ public class SignInFragment extends MvpFragment implements SignInView {
     @Click(R.id.sign_in_button)
     public void signIn() {
         Log.d(LOG_TAG, "signIn");
-        mSignInPresenter.signInRegular(mEmailEt.getText().toString(), mPasswordEt.getText().toString());
+        //TODO replace
+//        mSignInPresenter.signInRegular(mEmailEt.getText().toString(), mPasswordEt.getText().toString());
+        mSignInPresenter.signInTEST(mEmailEt.getText().toString(), mPasswordEt.getText().toString());
     }
 
     @Click(R.id.sign_in_facebook)
@@ -238,7 +232,7 @@ public class SignInFragment extends MvpFragment implements SignInView {
     @Click(R.id.sign_in_google)
     public void signInGoogle() {
         Log.d(LOG_TAG, "signInGoogle");
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mActivity.getGoogleApiClient());
         startActivityForResult(signInIntent, GOOGLE_NETWORK);
     }
 
@@ -269,8 +263,15 @@ public class SignInFragment extends MvpFragment implements SignInView {
 
     @Click(R.id.sign_in_register)
     public void registerUser() {
-        Log.d(LOG_TAG, "registration");
+        Log.d(LOG_TAG, "registerUser");
         mActivity.replaceFragment(new SignUpFragment_());
+    }
+
+    @Click(R.id.reset_pass_tv)
+    public void resetPassword() {
+        Log.d(LOG_TAG, "resetPassword");
+        mResetPasswordDialog = new ResetPasswordDialog_();
+        mResetPasswordDialog.show(getFragmentManager(), "reset_pass_dialog");
     }
 
     private void toggleProgress(final boolean isShown) {
@@ -309,9 +310,10 @@ public class SignInFragment extends MvpFragment implements SignInView {
     @Override
     public void failedSignIn(String message) {
         Log.d(LOG_TAG, "failedSignIn - " + message);
-        mErrorDialog = new AlertDialog.Builder(mActivity)
+        mErrorDialog = new AlertDialog.Builder(mActivity, R.style.BodyFitErrorDialog)
                 .setTitle(R.string.app_name)
                 .setMessage(message)
+                .setPositiveButton(getString(R.string.okay), (dialog, which) -> dialog.dismiss())
                 .setOnCancelListener(dialog -> mSignInPresenter.onErrorCancel())
                 .show();
     }
@@ -319,9 +321,10 @@ public class SignInFragment extends MvpFragment implements SignInView {
     @Override
     public void failedSignUp(String message) {
         Log.d(LOG_TAG, "failedSignUp - " + message);
-        mErrorDialog = new AlertDialog.Builder(mActivity)
+        mErrorDialog = new AlertDialog.Builder(mActivity, R.style.BodyFitErrorDialog)
                 .setTitle(R.string.app_name)
                 .setMessage(message)
+                .setPositiveButton(getString(R.string.okay), (dialog, which) -> dialog.dismiss())
                 .setOnCancelListener(dialog -> mSignInPresenter.onErrorCancel())
                 .show();
     }
@@ -337,15 +340,15 @@ public class SignInFragment extends MvpFragment implements SignInView {
     @Override
     public void hideFormError() {
         Log.d(LOG_TAG, "hideFormError");
-        mEmailEt.setError(null);
-        mPasswordEt.setError(null);
+        mEmailInputLayout.setError(null);
+        mPasswordInputLayout.setError(null);
     }
 
     @Override
     public void showRegularFormError(Integer emailError, Integer passwordError) {
-        Log.d(LOG_TAG, "hideFormError");
-        mEmailEt.setError(emailError == null ? null : getString(emailError));
-        mPasswordEt.setError(passwordError == null ? null : getString(passwordError));
+        Log.d(LOG_TAG, "showRegularFormError");
+        mEmailInputLayout.setError(emailError == null ? null : getString(emailError));
+        mPasswordInputLayout.setError(passwordError == null ? null : getString(passwordError));
     }
 
     @Override
@@ -354,6 +357,7 @@ public class SignInFragment extends MvpFragment implements SignInView {
         mSocialErrorDialog = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.app_name)
                 .setMessage(R.string.invalid_social_user)
+                .setPositiveButton(getString(R.string.okay), (dialog, which) -> dialog.dismiss())
                 .setOnCancelListener(DialogInterface::dismiss)
                 .show();
     }
@@ -361,7 +365,12 @@ public class SignInFragment extends MvpFragment implements SignInView {
     @Override
     public void successSignIn() {
         Log.d(LOG_TAG, "successSignIn");
-        final Intent intent = new Intent(this, HomeActivity_.class);
+        //TODO rework method to check tutorial seen
+//        final Intent intent = new Intent(mActivity, HomeActivity_.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
+
+        final Intent intent = new Intent(mActivity, TutorialActivity_.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
@@ -369,9 +378,55 @@ public class SignInFragment extends MvpFragment implements SignInView {
     @Override
     public void successSignUp() {
         Log.d(LOG_TAG, "successSignUp");
-        final Intent intent = new Intent(this, HomeActivity_.class);
+        //TODO rework method to check tutorial seen
+//        final Intent intent = new Intent(mActivity, HomeActivity_.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
+
+        final Intent intent = new Intent(mActivity, TutorialActivity_.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    @Override
+    public void startResetPassword() {
+        Log.d(LOG_TAG, "startResetPassword");
+        mResetPasswordDialog.isShownProgress(true);
+    }
+
+    @Override
+    public void finishResetPassword() {
+        Log.d(LOG_TAG, "finishResetPassword");
+        mResetPasswordDialog.isShownProgress(false);
+    }
+
+    @Override
+    public void failedResetPassword(String message) {
+        Log.d(LOG_TAG, "failedResetPassword - " + message);
+        mActivity.showSnackBar(message);
+    }
+
+    @Override
+    public void hideFormPasswordError() {
+        Log.d(LOG_TAG, "hideFormPasswordError");
+        mResetPasswordDialog.getInputField().setError(null);
+    }
+
+    @Override
+    public void showResetPasswordFormError(Integer emailError) {
+        Log.d(LOG_TAG, "showRegularFormError");
+        mResetPasswordDialog.getInputField().setError(emailError == null ? null : getString(emailError));
+    }
+
+    @Override
+    public void successResetPassword() {
+        Log.d(LOG_TAG, "successResetPassword");
+        mResetPasswordDialog.dismiss();
+        mActivity.showSnackBar(getString(R.string.reset_password_success));
+    }
+
+    public ResetPasswordPresenter delegateResetPassPresenter(){
+        return mResetPasswordPresenter;
     }
 
     @Override

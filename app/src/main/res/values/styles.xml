@@ -6,6 +6,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorDivider</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
     </style>
 
     <style name="MainTitleTextView">
@@ -13,10 +16,18 @@
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
+    <style name="MainTitleWhiteTextView">
+        <item name="android:textSize">@dimen/title_text_size</item>
+        <item name="android:textColor">@color/colorIcons</item>
+    </style>
+
     <style name="MainEditText">
         <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:textColor">@color/colorIcons</item>
         <item name="android:textColorHint">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
     </style>
 
     <style name="MainMiddleTextView">
@@ -71,5 +82,17 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
+    <style name="BodyFitErrorDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorIcons</item>
+    </style>
 
+    <style name="InputLayoutErrorText" parent="TextAppearance.Design.Error">
+        <item name="android:textColor">@color/colorAccentDark</item>
+    </style>
+
+    <style name="InputLayoutHintText" parent="TextAppearance.Design.Hint">
+        <item name="android:textColor">@color/colorIcons</item>
+    </style>
 </resources>

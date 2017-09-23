@@ -4,6 +4,7 @@
     <!--Default Theme-->
     <color name="colorPrimary">#526873</color>
     <color name="colorPrimaryDark">#2b383f</color>
+    <color name="colorPrimaryExtraDark">#232e34</color>
     <color name="colorPrimaryLight">#CFD8DC</color>
     <color name="colorAccent">#ff5f2c</color>
     <color name="colorAccentDark">#e34514</color>

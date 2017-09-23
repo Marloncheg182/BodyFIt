@@ -10,9 +10,9 @@ import com.goodguys.bodyfit.app.BodyFitApplication;
  */
 
 public class PrefUtils {
-    private static final String PREF_NAME = "body_fit";
+    private static final String PREF_NAME = "bodyfit";
 
-    public static SharedPreferences getPrefs(){
+    public static SharedPreferences getPrefs() {
         return BodyFitApplication.getAppComponent().getContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 

@@ -2,10 +2,13 @@ package com.goodguys.bodyfit.di;
 
 import android.content.Context;
 
+import com.goodguys.bodyfit.app.BodyFitApplication;
 import com.goodguys.bodyfit.di.modules.AuthModule;
 import com.goodguys.bodyfit.di.modules.ContextModule;
 import com.goodguys.bodyfit.di.modules.EventBusModule;
 import com.goodguys.bodyfit.mvp.BodyFitRepository;
+import com.goodguys.bodyfit.mvp.presenters.HomePresenter;
+import com.goodguys.bodyfit.mvp.presenters.ResetPasswordPresenter;
 import com.goodguys.bodyfit.mvp.presenters.SignInPresenter;
 import com.goodguys.bodyfit.mvp.presenters.SignUpPresenter;
 import com.squareup.otto.Bus;
@@ -34,4 +37,5 @@ public interface AppComponent {
 
     void inject(ResetPasswordPresenter presenter);
 
+    void inject(HomePresenter homePresenter);
 }

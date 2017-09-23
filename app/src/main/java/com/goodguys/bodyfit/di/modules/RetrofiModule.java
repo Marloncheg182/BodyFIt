@@ -60,7 +60,7 @@ public class RetrofiModule {
         public String translateName(Field field) {
             String name = FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES.translateName(field);
             name = name.substring(2, name.length()).toLowerCase();
-            return null;
+            return name;
         }
     }
 }
