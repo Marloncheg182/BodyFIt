@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.goodguys.bodyfit.R;
 import com.goodguys.bodyfit.mvp.ui.adapters.TutorialPagerAdapter;
 
@@ -17,7 +18,7 @@ import org.androidannotations.annotations.ViewById;
  */
 
 @EActivity(R.layout.activity_tutorial)
-public class TutorialActivity extends MvpAppCompatActivity {
+public class TutorialActivity extends MvpAppCompatActivity{
     private static final String LOG_TAG = "TutorialActivity";
 
     @ViewById(R.id.tutorial_view_pager)
@@ -33,6 +34,7 @@ public class TutorialActivity extends MvpAppCompatActivity {
     @AfterViews
     public void initPager() {
         Log.d(LOG_TAG, "initPager");
+        getMvpDelegate().onAttach();
         adapter = new TutorialPagerAdapter(getSupportFragmentManager());
         mTutorialPager.setAdapter(adapter);
         mTutorialPager.setCurrentItem(0);

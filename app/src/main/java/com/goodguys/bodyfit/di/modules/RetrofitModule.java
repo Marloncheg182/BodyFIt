@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 @Module
-public class RetrofiModule {
+public class RetrofitModule {
     @Provides
     @Singleton
     public Retrofit provideRetrofit(Retrofit.Builder builder){

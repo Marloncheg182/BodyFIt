@@ -27,5 +27,5 @@ public interface SignUpView extends MvpView{
     void sendSignUpSuccessNotification();
 
     @StateStrategyType(SkipStrategy.class)
-    void successSignUp();
+    void successSignUp(boolean isTutorialShown);
 }

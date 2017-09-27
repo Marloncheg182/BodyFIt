@@ -26,7 +26,7 @@ public class SignUpPresenter extends BasePresenter<SignUpView>{
     BodyFitRepository mBodyFitRepository;
 
     public SignUpPresenter(){
-        BodyFitApplication.getAppComponent().inject(this);}
+        BodyFitApplication.getAuthComponent().inject(this);}
 
     public void signUpRegular(String email, String password){
         Integer emailError = null;
@@ -50,12 +50,12 @@ public class SignUpPresenter extends BasePresenter<SignUpView>{
         getViewState().startSignUp();
 
         Disposable disposable = mBodyFitRepository.signUpRegular(new SignUpRegularRequest(email, password))
-                .doOnNext(authResponse -> AuthUtils.setToken(authResponse.getToken()))
+                .doOnNext(authResponse -> {AuthUtils.setToken(authResponse.getToken()); AuthUtils.setTutorial(true);})
                 .compose(Utils.applySchedulers())
                 .subscribe(authResponse -> {
                     getViewState().finishSignUp();
                     getViewState().sendSignUpSuccessNotification();
-                    getViewState().successSignUp();
+                    getViewState().successSignUp(AuthUtils.getTutorial());
                 }, throwable -> {
                     getViewState().finishSignUp();
                     getViewState().failedSignUp(throwable.getMessage());
@@ -64,6 +64,8 @@ public class SignUpPresenter extends BasePresenter<SignUpView>{
         unsubscribeOnDestroy(disposable);
     }
 
+
+    //TODO remove test
     public void signUpRegularTEST(String email, String password){
         Integer emailError = null;
         Integer passwordError = null;
@@ -86,12 +88,13 @@ public class SignUpPresenter extends BasePresenter<SignUpView>{
 
 
         if (email.equals("testmail@gmail.com") && password.equals("123")) {
+            AuthUtils.setTutorial(true);
             getViewState().startSignUp();
             getViewState().finishSignUp();
             getViewState().sendSignUpSuccessNotification();
-            getViewState().successSignUp();
+            getViewState().successSignUp(AuthUtils.getTutorial());
         }else {
-            getViewState().failedSignUp("Wrong User");
+            signUpRegular(email, password);
         }
     }
 

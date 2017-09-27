@@ -27,11 +27,11 @@ public class TutorialPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new FirstTutorialFragment_();
+                return FirstTutorialFragment_.builder().build();
             case 1:
-                return new SecondTutorialFragment_();
+                return SecondTutorialFragment_.builder().build();
             case 2:
-                return new ThirdTutorialFragment_();
+                return ThirdTutorialFragment_.builder().build();
         }
         return null;
     }

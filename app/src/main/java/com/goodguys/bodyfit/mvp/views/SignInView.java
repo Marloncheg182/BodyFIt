@@ -33,8 +33,8 @@ public interface SignInView extends MvpView{
     void showNetworkFormError(Integer networkKeyError);
 
     @StateStrategyType(SkipStrategy.class)
-    void successSignIn();
+    void successSignIn(boolean isTutorialShown);
 
     @StateStrategyType(SkipStrategy.class)
-    void successSignUp();
+    void successSignUp(boolean isTutorialShown);
 }

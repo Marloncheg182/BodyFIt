@@ -1,6 +1,6 @@
-package com.goodguys.bodyfit.di.modules;
+package com.goodguys.bodyfit.di.modules.auth;
 
-import com.goodguys.bodyfit.app.BodyFitApi;
+import com.goodguys.bodyfit.api.AuthApi;
 import com.squareup.otto.Bus;
 
 import javax.inject.Singleton;
@@ -13,10 +13,10 @@ import dagger.Provides;
  */
 
 @Module
-public class EventBusModule {
+public class EventAuthBusModule {
     @Provides
     @Singleton
-    public Bus provideBus(BodyFitApi authApi){
+    public Bus provideBus(AuthApi authApi){
         return new Bus();
     }
 }

@@ -141,16 +141,13 @@ public class SignUpFragment extends MvpAppCompatFragment implements SignUpView{
     }
 
     @Override
-    public void successSignUp() {
+    public void successSignUp(boolean isTutorialShown) {
         Log.d(LOG_TAG, "successSignUp");
-        //TODO rework method to check tutorial seen
-//        final Intent intent = new Intent(mActivity, HomeActivity_.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(intent);
-
-        final Intent intent = new Intent(mActivity, TutorialActivity_.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        if (isTutorialShown){
+            TutorialActivity_.intent(this).flags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK).start();
+        }else {
+            HomeActivity_.intent(this).flags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK).start();
+        }
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.goodguys.bodyfit.R;
+import com.goodguys.bodyfit.mvp.models.auth.signin.SignInSocialRequest;
 import com.goodguys.bodyfit.mvp.ui.fragments.SignInFragment;
 import com.goodguys.bodyfit.mvp.ui.fragments.SignInFragment_;
 import com.google.android.gms.auth.api.Auth;
@@ -20,6 +21,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.FragmentArg;
+import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
@@ -38,7 +42,7 @@ public class AuthActivity extends MvpAppCompatActivity {
     @AfterViews
     void loadSignInScreen() {
         Log.d(LOG_TAG, "loadSignInScreen");
-        getSupportFragmentManager().beginTransaction().add(R.id.auth_fragment_container, new SignInFragment_()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.auth_fragment_container, SignInFragment_.builder().build()).commit();
     }
 
     @Override

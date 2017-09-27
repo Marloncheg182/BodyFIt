@@ -34,8 +34,6 @@ public class ThirdTutorialFragment extends MvpAppCompatFragment {
     @Click(R.id.tutorial_third_close_button)
     public void closeTutorial(){
         Log.d(LOG_TAG, "closeTutorial");
-        final Intent intent = new Intent(mActivity, HomeActivity_.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        HomeActivity_.intent(getContext()).flags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK).start();
     }
 }

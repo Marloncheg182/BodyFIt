@@ -19,7 +19,7 @@ public class HomePresenter extends MvpPresenter<HomeView> {
     BodyFitRepository mBodyFitRepository;
 
     public HomePresenter() {
-        BodyFitApplication.getAppComponent().inject(this);
+        BodyFitApplication.getsUserComponent().inject(this);
     }
 
 

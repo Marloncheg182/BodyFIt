@@ -29,7 +29,7 @@ public class SignInPresenter extends BasePresenter<SignInView> {
     BodyFitRepository mBodyFitRepository;
 
     public SignInPresenter() {
-        BodyFitApplication.getAppComponent().inject(this);
+        BodyFitApplication.getAuthComponent().inject(this);
     }
 
     public void signInRegular(String email, String password) {
@@ -56,7 +56,7 @@ public class SignInPresenter extends BasePresenter<SignInView> {
                 .compose(Utils.applySchedulers())
                 .subscribe(authResponse -> {
                     getViewState().finishSignIn();
-                    getViewState().successSignIn();
+                    getViewState().successSignIn(AuthUtils.getTutorial());
                 }, throwable -> {
                     getViewState().finishSignIn();
                     getViewState().failedSignIn(throwable.getMessage());
@@ -65,6 +65,7 @@ public class SignInPresenter extends BasePresenter<SignInView> {
         unsubscribeOnDestroy(disposable);
     }
 
+    //TODO remove test
     public void signInTEST(String email, String password) {
         Integer emailError = null;
         Integer passwordError = null;
@@ -86,9 +87,9 @@ public class SignInPresenter extends BasePresenter<SignInView> {
         if (email.equals("testmail@gmail.com") && password.equals("123")) {
             getViewState().startSignIn();
             getViewState().finishSignIn();
-            getViewState().successSignIn();
+            getViewState().successSignIn(AuthUtils.getTutorial());
         }else {
-            getViewState().failedSignIn("Wrong User");
+            signInRegular(email, password);
         }
     }
 
@@ -111,7 +112,7 @@ public class SignInPresenter extends BasePresenter<SignInView> {
                 .compose(Utils.applySchedulers())
                 .subscribe(authResponse -> {
                     getViewState().finishSignIn();
-                    getViewState().successSignIn();
+                    getViewState().successSignIn(AuthUtils.getTutorial());
                 }, throwable -> {
                     getViewState().finishSignIn();
                     if (throwable.getMessage().contains(Constants.SOCIAL_USER)){
@@ -141,11 +142,11 @@ public class SignInPresenter extends BasePresenter<SignInView> {
         getViewState().startSignUp();
 
         Disposable disposable = mBodyFitRepository.signUpSocial(new SignUpSocialRequest(network, networkKey))
-                .doOnNext(authResponse -> AuthUtils.setToken(authResponse.getToken()))
+                .doOnNext(authResponse -> {AuthUtils.setToken(authResponse.getToken()); AuthUtils.setTutorial(true);})
                 .compose(Utils.applySchedulers())
                 .subscribe(authResponse -> {
                     getViewState().finishSignUp();
-                    getViewState().successSignUp();
+                    getViewState().successSignUp(AuthUtils.getTutorial());
                 }, throwable -> {
                     getViewState().finishSignUp();
                     getViewState().failedSignUp(throwable.getMessage());

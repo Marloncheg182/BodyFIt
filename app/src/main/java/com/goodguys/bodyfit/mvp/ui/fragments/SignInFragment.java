@@ -29,6 +29,7 @@ import com.goodguys.bodyfit.common.Constants;
 import com.goodguys.bodyfit.mvp.presenters.ResetPasswordPresenter;
 import com.goodguys.bodyfit.mvp.presenters.SignInPresenter;
 import com.goodguys.bodyfit.mvp.ui.activities.AuthActivity;
+import com.goodguys.bodyfit.mvp.ui.activities.HomeActivity;
 import com.goodguys.bodyfit.mvp.ui.activities.HomeActivity_;
 import com.goodguys.bodyfit.mvp.ui.activities.TutorialActivity_;
 import com.goodguys.bodyfit.mvp.ui.dialogs.BodyFitProgressDialog;
@@ -264,7 +265,7 @@ public class SignInFragment extends MvpAppCompatFragment implements SignInView, 
     @Click(R.id.sign_in_register)
     public void registerUser() {
         Log.d(LOG_TAG, "registerUser");
-        mActivity.replaceFragment(new SignUpFragment_());
+        mActivity.replaceFragment(SignUpFragment_.builder().build());
     }
 
     @Click(R.id.reset_pass_tv)
@@ -363,29 +364,23 @@ public class SignInFragment extends MvpAppCompatFragment implements SignInView, 
     }
 
     @Override
-    public void successSignIn() {
+    public void successSignIn(boolean isTutorialShown) {
         Log.d(LOG_TAG, "successSignIn");
-        //TODO rework method to check tutorial seen
-//        final Intent intent = new Intent(mActivity, HomeActivity_.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(intent);
-
-        final Intent intent = new Intent(mActivity, TutorialActivity_.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        if (isTutorialShown){
+            HomeActivity_.intent(this).flags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK).start();
+        }else {
+            TutorialActivity_.intent(this).flags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK).start();
+        }
     }
 
     @Override
-    public void successSignUp() {
+    public void successSignUp(boolean isTutorialShown) {
         Log.d(LOG_TAG, "successSignUp");
-        //TODO rework method to check tutorial seen
-//        final Intent intent = new Intent(mActivity, HomeActivity_.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(intent);
-
-        final Intent intent = new Intent(mActivity, TutorialActivity_.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        if (isTutorialShown){
+            TutorialActivity_.intent(this).flags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK).start();
+        }else {
+            HomeActivity_.intent(this).flags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK).start();
+        }
     }
 
     @Override

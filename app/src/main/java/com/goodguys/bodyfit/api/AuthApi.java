@@ -1,4 +1,4 @@
-package com.goodguys.bodyfit.app;
+package com.goodguys.bodyfit.api;
 
 import com.goodguys.bodyfit.common.Constants;
 import com.goodguys.bodyfit.mvp.models.auth.AuthResponse;
@@ -18,7 +18,7 @@ import retrofit2.http.Query;
  * Created by Oleg Romanenchuk on 17.09.2017.
  */
 
-public interface BodyFitApi {
+public interface AuthApi {
 
     @POST(Constants.PREF_AUTH + "/signin/app")
     Observable<AuthResponse> signInRegular(@Body SignInRegularRequest signInRegularRequest);

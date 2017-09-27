@@ -24,7 +24,7 @@ public class ResetPasswordPresenter extends BasePresenter<ResetPasswordView>{
     BodyFitRepository mBodyFitRepository;
 
     public ResetPasswordPresenter(){
-        BodyFitApplication.getAppComponent().inject(this);
+        BodyFitApplication.getAuthComponent().inject(this);
     }
 
     public void resetPassword(String email){

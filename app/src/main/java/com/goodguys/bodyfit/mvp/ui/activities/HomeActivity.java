@@ -11,9 +11,14 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
+import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.goodguys.bodyfit.R;
+import com.goodguys.bodyfit.mvp.common.AuthUtils;
+import com.goodguys.bodyfit.mvp.presenters.HomeActivityPresenter;
 import com.goodguys.bodyfit.mvp.ui.fragments.HomeFragment_;
 import com.goodguys.bodyfit.mvp.ui.fragments.SignInFragment_;
+import com.goodguys.bodyfit.mvp.views.HomeActivityView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -21,10 +26,13 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_home)
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends MvpAppCompatActivity implements HomeActivityView{
     private static final String LOG_TAG = "HomeActivity";
 
-    @ViewById(R.id.main_layout_menu)
+    @InjectPresenter
+    HomeActivityPresenter mHomeActivityPresenter;
+
+    @ViewById(R.id.home_layout_menu)
     RelativeLayout mLayout;
     @ViewById(R.id.sign_up_menu_btn)
     ImageButton mMenuBtn;
@@ -73,18 +81,28 @@ public class HomeActivity extends AppCompatActivity {
         openDrawer();
     }
 
-    @Click(R.id.main_layout_menu)
-    public void openMain() {
+    @Click(R.id.home_layout_menu)
+    public void openHome() {
+        Log.d(LOG_TAG, "openHome");
         mLayout.setSelected(true);
     }
 
     @Click(R.id.signout_layout_menu)
+    public void signOutAction() {
+        Log.d(LOG_TAG, "signOut");
+        mHomeActivityPresenter.signOut();
+    }
+
+    @Override
     public void signOut() {
         Log.d(LOG_TAG, "signOut");
-        //TODO set token ""
-        Intent logoutIntent = new Intent(this, AuthActivity_.class);
-        startActivity(logoutIntent);
-        finish();
+        AuthUtils.setToken("");
+    }
+
+    @Override
+    public void finishActivity() {
+        Log.d(LOG_TAG, "finishActivity");
+        AuthActivity_.intent(this).flags(Intent.FLAG_ACTIVITY_CLEAR_TASK).start();
     }
 
     private void openDrawer() {

@@ -36,10 +36,7 @@ public class FirstTutorialFragment extends MvpAppCompatFragment{
     @Click(R.id.tutorial_first_skip_button)
     public void skipTutorial(){
         Log.d(LOG_TAG, "skipTutorial");
-        final Intent intent = new Intent(mActivity, HomeActivity_.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-
+        HomeActivity_.intent(getContext()).flags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK).start();
     }
 
     @Click(R.id.tutorial_first_next_button)

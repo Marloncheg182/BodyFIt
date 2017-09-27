@@ -2,12 +2,10 @@ package com.goodguys.bodyfit.di;
 
 import android.content.Context;
 
-import com.goodguys.bodyfit.app.BodyFitApplication;
-import com.goodguys.bodyfit.di.modules.AuthModule;
+import com.goodguys.bodyfit.di.modules.auth.ApiAuthModule;
 import com.goodguys.bodyfit.di.modules.ContextModule;
-import com.goodguys.bodyfit.di.modules.EventBusModule;
+import com.goodguys.bodyfit.di.modules.auth.EventAuthBusModule;
 import com.goodguys.bodyfit.mvp.BodyFitRepository;
-import com.goodguys.bodyfit.mvp.presenters.HomePresenter;
 import com.goodguys.bodyfit.mvp.presenters.ResetPasswordPresenter;
 import com.goodguys.bodyfit.mvp.presenters.SignInPresenter;
 import com.goodguys.bodyfit.mvp.presenters.SignUpPresenter;
@@ -22,12 +20,12 @@ import dagger.Component;
  */
 
 @Singleton
-@Component(modules = {ContextModule.class, EventBusModule.class, AuthModule.class})
-public interface AppComponent {
+@Component(modules = {ContextModule.class, EventAuthBusModule.class, ApiAuthModule.class})
+public interface AuthComponent {
 
     Context getContext();
 
-    BodyFitRepository getAuthRepository();
+    BodyFitRepository getRepository();
 
     Bus getBus();
 
@@ -37,5 +35,4 @@ public interface AppComponent {
 
     void inject(ResetPasswordPresenter presenter);
 
-    void inject(HomePresenter homePresenter);
 }

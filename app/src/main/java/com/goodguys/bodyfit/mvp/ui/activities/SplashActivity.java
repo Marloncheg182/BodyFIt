@@ -2,15 +2,12 @@ package com.goodguys.bodyfit.mvp.ui.activities;
 
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.goodguys.bodyfit.R;
-import com.goodguys.bodyfit.mvp.common.AuthUtils;
+import com.goodguys.bodyfit.mvp.models.auth.signin.SignInSocialRequest;
 import com.goodguys.bodyfit.mvp.presenters.SplashPresenter;
 import com.goodguys.bodyfit.mvp.views.SplashView;
 
@@ -44,7 +41,17 @@ public class SplashActivity extends MvpAppCompatActivity implements SplashView {
         TimerTask delayedThreadStartTask = new TimerTask() {
             @Override
             public void run() {
-                new Thread(() -> {startActivity(new Intent(SplashActivity.this, isAuthorized ? HomeActivity_.class : AuthActivity_.class)); finish();}).start();
+                new Thread(() -> {
+                    if (isAuthorized) {
+                        HomeActivity_.intent(getApplicationContext())
+                                .flags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                .start();
+                    } else {
+                        AuthActivity_.intent(getApplicationContext())
+                                .flags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                .start();
+                    }
+                }).start();
             }
         };
         timer.schedule(delayedThreadStartTask, 2 * 1000);

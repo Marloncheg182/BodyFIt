@@ -105,7 +105,7 @@
                     android:layout_marginTop="28.1dp">
 
                     <ImageView
-                        android:id="@+id/false_image_profile"
+                        android:id="@+id/menu_user_avatar_frame"
                         android:layout_width="56.5dp"
                         android:layout_height="56.5dp"
                         android:layout_centerInParent="true"
@@ -125,11 +125,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="9.9dp"
                     android:layout_marginStart="9.9dp"
                     android:layout_marginTop="35dp"
                     android:layout_toEndOf="@+id/profile_avatar_layout"
-                    android:layout_toRightOf="@+id/profile_avatar_layout"
                     android:textColor="@color/colorIcons"
                     android:textSize="18sp"
                     android:text="Oleg Oleg"
@@ -139,15 +137,14 @@
                     android:id="@+id/menu_open_profile"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
-                    android:layout_marginLeft="9.9dp"
                     android:layout_marginStart="9.9dp"
-                    android:layout_marginTop="60dp"
+                    android:layout_below="@+id/menu_user_name"
+                    android:padding="10dp"
                     android:layout_toEndOf="@+id/profile_avatar_layout"
-                    android:layout_toRightOf="@+id/profile_avatar_layout"
                     android:clickable="true"
                     android:text="@string/open_profile_text"
                     android:textColor="@color/text_selected_menu_header"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
 
             </RelativeLayout>
 
@@ -167,13 +164,13 @@
                         android:orientation="horizontal">
 
                         <RelativeLayout
-                            android:id="@+id/main_layout_menu"
+                            android:id="@+id/home_layout_menu"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:background="@drawable/menu_selection_state">
 
                             <View
-                                android:id="@+id/main_selection_divider"
+                                android:id="@+id/home_selection_divider"
                                 android:layout_width="2.7dp"
                                 android:layout_height="50dp"
                                 android:background="@drawable/divider_selection_state" />
@@ -187,8 +184,8 @@
                                 android:layout_centerVertical="true"
                                 android:layout_marginLeft="27dp"
                                 android:layout_marginStart="27dp"
-                                android:layout_toEndOf="@+id/main_selection_divider"
-                                android:layout_toRightOf="@+id/main_selection_divider"
+                                android:layout_toEndOf="@+id/home_selection_divider"
+                                android:layout_toRightOf="@+id/home_selection_divider"
                                 android:scaleType="fitCenter" />
 
                             <TextView
