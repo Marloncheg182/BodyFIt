@@ -7,7 +7,7 @@ package com.goodguys.bodyfit.common;
 public class Constants {
 
     //Api
-    public static final String BASE_URL = "http//bodyfit/api/";
+    public static final String BASE_URL = "https://bodyfit.com/api/";
     public static final String PREF_AUTH = "auth";
     public static final String PREF_USER = "user";
 
@@ -15,4 +15,5 @@ public class Constants {
     public static final String FACEBOOK = "facebook";
     public static final String GOOGLE = "google";
     public static final String TWITTER = "twitter";
+    public static final String SOCIAL_USER = "social user exists";
 }

@@ -1,0 +1,742 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_activity_drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context="com.goodguys.bodyfit.mvp.ui.activities.HomeActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_sign_up"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:contentInsetStart="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/toolbar_form">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/colorPrimaryExtraDark" />
+
+                <ImageButton
+                    android:id="@+id/sign_up_menu_btn"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:background="@android:color/transparent"
+                    android:cropToPadding="true"
+                    android:padding="16dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/menu_button_icon" />
+
+                <TextView
+                    android:id="@+id/toolbar_title_home"
+                    style="@style/MainTitleWhiteTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:padding="10dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/colorPrimaryExtraDark" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+
+        <FrameLayout
+            android:id="@+id/home_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start">
+
+        <LinearLayout
+            android:id="@+id/header_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@color/colorAccent">
+
+                <ImageView
+                    android:id="@+id/menu_buttom_close"
+                    android:layout_width="21.3dp"
+                    android:layout_height="21.3dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="19.7dp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_profile_menu"
+                android:layout_width="match_parent"
+                android:layout_height="114dp"
+                android:layout_gravity="center"
+                android:background="@color/colorAccent">
+
+                <RelativeLayout
+                    android:id="@+id/profile_avatar_layout"
+                    android:layout_width="56.5dp"
+                    android:layout_height="56.5dp"
+                    android:layout_marginLeft="23.4dp"
+                    android:layout_marginStart="23.4dp"
+                    android:layout_marginTop="28.1dp">
+
+                    <ImageView
+                        android:id="@+id/menu_user_avatar_frame"
+                        android:layout_width="56.5dp"
+                        android:layout_height="56.5dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/icon_profile_test"
+                        android:scaleType="fitCenter" />
+
+                    <ImageView
+                        android:id="@+id/menu_user_avatar"
+                        android:layout_width="45.2dp"
+                        android:layout_height="45.2dp"
+                        android:layout_centerInParent="true"
+                        android:scaleType="fitCenter" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/menu_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="9.9dp"
+                    android:layout_marginTop="35dp"
+                    android:layout_toEndOf="@+id/profile_avatar_layout"
+                    android:textColor="@color/colorIcons"
+                    android:textSize="18sp"
+                    android:text="Oleg Oleg"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/menu_open_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="9.9dp"
+                    android:layout_below="@+id/menu_user_name"
+                    android:padding="10dp"
+                    android:layout_toEndOf="@+id/profile_avatar_layout"
+                    android:clickable="true"
+                    android:text="@string/open_profile_text"
+                    android:textColor="@color/text_selected_menu_header"
+                    android:textSize="13sp" />
+
+            </RelativeLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimaryDark">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/home_layout_menu"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@drawable/menu_selection_state">
+
+                            <View
+                                android:id="@+id/home_selection_divider"
+                                android:layout_width="2.7dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/divider_selection_state" />
+
+                            <ImageView
+                                android:id="@+id/image_main"
+                                android:layout_width="20.7dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="27dp"
+                                android:layout_marginStart="27dp"
+                                android:layout_toEndOf="@+id/home_selection_divider"
+                                android:layout_toRightOf="@+id/home_selection_divider"
+                                android:scaleType="fitCenter" />
+
+                            <TextView
+                                android:id="@+id/menu_my_main"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="17.3dp"
+                                android:layout_marginStart="17.3dp"
+                                android:layout_toEndOf="@+id/image_main"
+                                android:layout_toRightOf="@+id/image_main"
+                                android:gravity="center"
+                                android:text="menu 1"
+                                android:textColor="@color/text_selected_menu_nav"
+                                android:textSize="16sp" />
+
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/notif_layout_menu"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@drawable/menu_selection_state">
+
+                            <View
+                                android:id="@+id/notif_selection_divider"
+                                android:layout_width="2.7dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/divider_selection_state" />
+
+                            <ImageView
+                                android:id="@+id/image_notif"
+                                android:layout_width="20.7dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="27dp"
+                                android:layout_marginStart="27dp"
+                                android:layout_toEndOf="@+id/notif_selection_divider"
+                                android:layout_toRightOf="@+id/notif_selection_divider"
+                                android:scaleType="fitCenter" />
+
+                            <TextView
+                                android:id="@+id/menu_my_notif"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="17.3dp"
+                                android:layout_marginStart="17.3dp"
+                                android:layout_toEndOf="@+id/image_notif"
+                                android:layout_toRightOf="@+id/image_notif"
+                                android:gravity="center"
+                                android:text="Menu 2"
+                                android:textColor="@color/text_selected_menu_nav"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/notif_counter"
+                                android:layout_width="18.1sp"
+                                android:layout_height="18.1sp"
+                                android:layout_centerVertical="true"
+                                android:layout_margin="8dp"
+                                android:layout_toEndOf="@+id/menu_my_notif"
+                                android:layout_toRightOf="@+id/menu_my_notif"
+                                android:background="@drawable/facebook_button_form"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorIcons"
+                                android:textSize="12.8sp"
+                                android:visibility="gone" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/offers_layout_menu"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@drawable/menu_selection_state">
+
+                            <View
+                                android:id="@+id/offers_selection_divider"
+                                android:layout_width="2.7dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/divider_selection_state" />
+
+                            <ImageView
+                                android:id="@+id/image_offers"
+                                android:layout_width="20.7dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="27dp"
+                                android:layout_marginStart="27dp"
+                                android:layout_toEndOf="@+id/offers_selection_divider"
+                                android:layout_toRightOf="@+id/offers_selection_divider"
+                                android:scaleType="fitCenter" />
+
+                            <TextView
+                                android:id="@+id/menu_my_offers"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="17.3dp"
+                                android:layout_marginStart="17.3dp"
+                                android:layout_toEndOf="@+id/image_offers"
+                                android:layout_toRightOf="@+id/image_offers"
+                                android:gravity="center"
+                                android:text="Menu 3"
+                                android:textColor="@color/text_selected_menu_nav"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/offers_counter"
+                                android:layout_width="18.1sp"
+                                android:layout_height="18.1sp"
+                                android:layout_centerVertical="true"
+                                android:layout_margin="8dp"
+                                android:layout_toEndOf="@+id/menu_my_offers"
+                                android:layout_toRightOf="@+id/menu_my_offers"
+                                android:background="@drawable/facebook_button_form"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorIcons"
+                                android:textSize="12.8sp"
+                                android:visibility="gone" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/finances_layout_menu"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@drawable/menu_selection_state">
+
+                            <View
+                                android:id="@+id/finances_selection_divider"
+                                android:layout_width="2.7dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/divider_selection_state" />
+
+                            <ImageView
+                                android:id="@+id/image_finances"
+                                android:layout_width="20.7dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="27dp"
+                                android:layout_marginStart="27dp"
+                                android:layout_toEndOf="@+id/finances_selection_divider"
+                                android:layout_toRightOf="@+id/finances_selection_divider"
+                                android:scaleType="fitCenter" />
+
+                            <TextView
+                                android:id="@+id/menu_my_finances"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="17.3dp"
+                                android:layout_marginStart="17.3dp"
+                                android:layout_toEndOf="@+id/image_finances"
+                                android:layout_toRightOf="@+id/image_finances"
+                                android:gravity="center"
+                                android:text="Menu 4"
+                                android:textColor="@color/text_selected_menu_nav"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/finances_counter"
+                                android:layout_width="18.1sp"
+                                android:layout_height="18.1sp"
+                                android:layout_centerVertical="true"
+                                android:layout_margin="8dp"
+                                android:layout_toEndOf="@+id/menu_my_finances"
+                                android:layout_toRightOf="@+id/menu_my_finances"
+                                android:background="@drawable/facebook_button_form"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorIcons"
+                                android:textSize="12.8sp"
+                                android:visibility="gone" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <RelativeLayout
+                            android:id="@+id/social_layout_menu"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@drawable/menu_selection_state">
+
+                            <View
+                                android:id="@+id/social_selection_divider"
+                                android:layout_width="2.7dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/divider_selection_state" />
+
+                            <ImageView
+                                android:id="@+id/social_image"
+                                android:layout_width="20.7dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="27dp"
+                                android:layout_marginStart="27dp"
+                                android:layout_toEndOf="@+id/social_selection_divider"
+                                android:layout_toRightOf="@+id/social_selection_divider"
+                                android:scaleType="fitCenter" />
+
+                            <TextView
+                                android:id="@+id/menu_my_social"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="17.3dp"
+                                android:layout_marginStart="17.3dp"
+                                android:layout_toEndOf="@+id/social_image"
+                                android:layout_toRightOf="@+id/social_image"
+                                android:gravity="center"
+                                android:text="Menu 5"
+                                android:textColor="@color/text_selected_menu_nav"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/social_counter"
+                                android:layout_width="18.1sp"
+                                android:layout_height="18.1sp"
+                                android:layout_centerVertical="true"
+                                android:layout_margin="8dp"
+                                android:layout_toEndOf="@+id/menu_my_social"
+                                android:layout_toRightOf="@+id/menu_my_social"
+                                android:background="@drawable/facebook_button_form"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorIcons"
+                                android:textSize="12.8sp"
+                                android:visibility="gone" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/ads_layout_menu"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@drawable/menu_selection_state">
+
+                            <View
+                                android:id="@+id/ads_selection_divider"
+                                android:layout_width="2.7dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/divider_selection_state" />
+
+                            <ImageView
+                                android:id="@+id/image_ads"
+                                android:layout_width="20.7dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="27dp"
+                                android:layout_marginStart="27dp"
+                                android:layout_toEndOf="@+id/ads_selection_divider"
+                                android:layout_toRightOf="@+id/ads_selection_divider"
+                                android:scaleType="fitCenter" />
+
+                            <TextView
+                                android:id="@+id/menu_my_ads"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="17.3dp"
+                                android:layout_marginStart="17.3dp"
+                                android:layout_toEndOf="@+id/image_ads"
+                                android:layout_toRightOf="@+id/image_ads"
+                                android:gravity="center"
+                                android:text="Menu 6"
+                                android:textColor="@color/text_selected_menu_nav"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/ads_counter"
+                                android:layout_width="18.1sp"
+                                android:layout_height="18.1sp"
+                                android:layout_centerVertical="true"
+                                android:layout_margin="8dp"
+                                android:layout_toEndOf="@+id/menu_my_ads"
+                                android:layout_toRightOf="@+id/menu_my_ads"
+                                android:background="@drawable/facebook_button_form"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorIcons"
+                                android:textSize="12.8sp"
+                                android:visibility="gone" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/action_layout_menu"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@drawable/menu_selection_state">
+
+                            <View
+                                android:id="@+id/action_selection_divider"
+                                android:layout_width="2.7dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/divider_selection_state" />
+
+                            <ImageView
+                                android:id="@+id/image_action"
+                                android:layout_width="20.7dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="27dp"
+                                android:layout_marginStart="27dp"
+                                android:layout_toEndOf="@+id/action_selection_divider"
+                                android:layout_toRightOf="@+id/action_selection_divider"
+                                android:scaleType="fitCenter" />
+
+                            <TextView
+                                android:id="@+id/menu_my_action"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="17.3dp"
+                                android:layout_marginStart="17.3dp"
+                                android:layout_toEndOf="@+id/image_action"
+                                android:layout_toRightOf="@+id/image_action"
+                                android:gravity="center"
+                                android:text="Menu 7"
+                                android:textColor="@color/text_selected_menu_nav"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/action_counter"
+                                android:layout_width="18.1sp"
+                                android:layout_height="18.1sp"
+                                android:layout_centerVertical="true"
+                                android:layout_margin="8dp"
+                                android:layout_toEndOf="@+id/menu_my_action"
+                                android:layout_toRightOf="@+id/menu_my_action"
+                                android:background="@drawable/facebook_button_form"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorIcons"
+                                android:textSize="12.8sp"
+                                android:visibility="gone" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/support_layout_menu"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@drawable/menu_selection_state">
+
+                            <View
+                                android:id="@+id/support_selection_divider"
+                                android:layout_width="2.7dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/divider_selection_state" />
+
+                            <ImageView
+                                android:id="@+id/image_support"
+                                android:layout_width="20.7dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="27dp"
+                                android:layout_marginStart="27dp"
+                                android:layout_toEndOf="@+id/support_selection_divider"
+                                android:layout_toRightOf="@+id/support_selection_divider"
+                                android:scaleType="fitCenter" />
+
+                            <TextView
+                                android:id="@+id/menu_my_support"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="17.3dp"
+                                android:layout_marginStart="17.3dp"
+                                android:layout_toEndOf="@+id/image_support"
+                                android:layout_toRightOf="@+id/image_support"
+                                android:gravity="center"
+                                android:text="Menu 8"
+                                android:textColor="@color/text_selected_menu_nav"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/support_counter"
+                                android:layout_width="18.1sp"
+                                android:layout_height="18.1sp"
+                                android:layout_centerVertical="true"
+                                android:layout_margin="8dp"
+                                android:layout_toEndOf="@+id/menu_my_support"
+                                android:layout_toRightOf="@+id/menu_my_support"
+                                android:background="@drawable/facebook_button_form"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorIcons"
+                                android:textSize="12.8sp"
+                                android:visibility="gone" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/policy_layout_menu"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@drawable/menu_selection_state">
+
+                            <View
+                                android:id="@+id/policy_selection_divider"
+                                android:layout_width="2.7dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/divider_selection_state" />
+
+                            <ImageView
+                                android:id="@+id/image_policy"
+                                android:layout_width="20.7dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="27dp"
+                                android:layout_marginStart="27dp"
+                                android:layout_toEndOf="@+id/policy_selection_divider"
+                                android:layout_toRightOf="@+id/policy_selection_divider"
+                                android:scaleType="fitCenter" />
+
+                            <TextView
+                                android:id="@+id/menu_my_policy"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="17.3dp"
+                                android:layout_marginStart="17.3dp"
+                                android:layout_toEndOf="@+id/image_policy"
+                                android:layout_toRightOf="@+id/image_policy"
+                                android:gravity="center"
+                                android:text="Menu 9"
+                                android:textColor="@color/text_selected_menu_nav"
+                                android:textSize="16sp" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/signout_layout_menu"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp">
+
+                            <View
+                                android:id="@+id/signout_selection_divider"
+                                android:layout_width="2.7dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/divider_selection_state" />
+
+                            <ImageView
+                                android:id="@+id/image_signout"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="27dp"
+                                android:layout_marginStart="27dp"
+                                android:layout_toEndOf="@+id/signout_selection_divider"
+                                android:layout_toRightOf="@+id/signout_selection_divider"
+                                android:scaleType="fitCenter" />
+
+                            <TextView
+                                android:id="@+id/menu_my_signout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="17.3dp"
+                                android:layout_marginStart="17.3dp"
+                                android:layout_toEndOf="@+id/image_signout"
+                                android:layout_toRightOf="@+id/image_signout"
+                                android:gravity="center"
+                                android:text="@string/logout_text"
+                                android:textColor="@color/colorIcons"
+                                android:textSize="16sp" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/update_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="61.2dp"
+                        android:background="@color/colorPrimaryDark"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </android.support.design.widget.NavigationView>
+</android.support.v4.widget.DrawerLayout>

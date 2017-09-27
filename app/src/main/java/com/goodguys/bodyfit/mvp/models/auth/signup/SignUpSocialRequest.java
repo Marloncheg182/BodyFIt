@@ -11,22 +11,22 @@ import com.goodguys.bodyfit.common.CheckNull;
 
 public class SignUpSocialRequest implements Parcelable{
     private String network;
-    private String key;
+    private String token;
 
-    public SignUpSocialRequest(String network, String key) {
+    public SignUpSocialRequest(String network, String token) {
         this.network = network;
-        this.key = key;
+        this.token = token;
     }
 
     protected SignUpSocialRequest(Parcel in) {
         network = in.readString();
-        key = in.readString();
+        token = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(network);
-        dest.writeString(key);
+        dest.writeString(token);
     }
 
     @Override
@@ -51,16 +51,16 @@ public class SignUpSocialRequest implements Parcelable{
         return network;
     }
 
-    public String getKey() {
-        CheckNull.check(key, this::setKey, () -> setKey(""));
-        return key;
+    public String getToken() {
+        CheckNull.check(token, this::setToken, () -> setToken(""));
+        return token;
     }
 
     private void setNetwork(String network) {
         this.network = network;
     }
 
-    private void setKey(String key) {
-        this.key = key;
+    private void setToken(String token) {
+        this.token = token;
     }
 }

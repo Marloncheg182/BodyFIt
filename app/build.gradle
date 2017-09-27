@@ -4,58 +4,106 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     defaultConfig {
-        applicationId "com.goodguys.bodyfit"
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+    signingConfigs {
+        debug {
+            keyAlias 'bodyfit'
+            keyPassword '69938923'
+            storeFile file('D:/projects/BodyFit/keystore/bodyfit_keystore.jks')
+            storePassword '69938923'
+        }
+        release {
+            keyAlias 'bodyfit'
+            keyPassword '69938923'
+            storeFile file('D:/projects/BodyFit/keystore/bodyfit_keystore.jks')
+            storePassword '69938923'
+        }
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def name = new String("decideddiet");
+                    output.outputFile = new File(output.outputFile.parent,
+                            output.outputFile.name.replace("app-release", "" + name))
+                    output.outputFile = new File(output.outputFile.parent,
+                            output.outputFile.name.replace("app-debug", "" + name))
+                }
+                debug {
+                    signingConfig signingConfigs.debug
+                }
+            }
+            compileOptions {
+                sourceCompatibility JavaVersion.VERSION_1_8
+                targetCompatibility JavaVersion.VERSION_1_8
+            }
         }
     }
-    compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+    productFlavors {
     }
 }
 
+def support = '25.3.1'
+def retrofit = '2.3.0'
+def okhttp = '3.8.1'
+def dagger = '2.11'
+def google = '11.0.4'
+def twitter = '3.1.1'
+def moxy = '1.5.3'
+def androidannotations = '4.3.1'
+
+
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support:cardview-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
+    compile "com.android.support:appcompat-v7:$support"
+    compile "com.android.support:recyclerview-v7:$support"
+    compile "com.android.support:cardview-v7:$support"
+    compile "com.android.support:design:$support"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile "com.squareup.retrofit2:retrofit:$retrofit"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$retrofit"
+    compile "com.squareup.retrofit2:converter-gson:$retrofit"
     compile 'com.android.support:multidex:1.0.1'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
-    compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    compile "com.squareup.okhttp3:logging-interceptor:$okhttp"
+    compile "com.squareup.okhttp3:okhttp:$okhttp"
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
     compile 'com.github.bumptech.glide:glide:4.0.0-RC1'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'
-    compile 'com.arello-mobile:moxy:1.5.3'
-    compile 'com.arello-mobile:moxy-app-compat:1.5.3'
-    compile 'com.arello-mobile:moxy-android:1.5.3'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
-    compile 'com.google.android.gms:play-services-auth:11.0.4'
-    compile 'com.google.android.gms:play-services-basement:11.0.4'
-    compile 'com.google.android.gms:play-services-base:11.0.4'
-    compile 'com.google.firebase:firebase-core:11.0.4'
-    compile 'com.google.firebase:firebase-messaging:11.0.4'
-    compile "org.androidannotations:androidannotations-api:4.3.1"
-    compile 'com.squareup:otto:1.3.8'
-    compile group: 'com.google.dagger', name: 'dagger', version: '2.11'
-    annotationProcessor "org.androidannotations:androidannotations:4.3.1"
-    annotationProcessor 'com.arello-mobile:moxy-compiler:1.5.3'
+    compile "com.google.android.gms:play-services-auth:$google"
+    compile "com.google.android.gms:play-services-basement:$google"
+    compile "com.google.android.gms:play-services-base:$google"
+    compile "com.google.firebase:firebase-core:$google"
+    compile "com.google.firebase:firebase-messaging:$google"
+    compile "com.twitter.sdk.android:twitter-core:$twitter"
+    compile "com.twitter.sdk.android:tweet-ui:$twitter"
+    compile "com.twitter.sdk.android:tweet-composer:$twitter"
+    compile "com.squareup:otto:1.3.8"
+    compile "com.google.dagger:dagger:$dagger"
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
+    compile "com.arello-mobile:moxy-android:$moxy"
+    compile "com.arello-mobile:moxy:$moxy"
+    compile "com.arello-mobile:moxy-app-compat:$moxy"
+    annotationProcessor "com.arello-mobile:moxy-compiler:$moxy"
+    annotationProcessor "org.androidannotations:androidannotations:$androidannotations"
+    compile "org.androidannotations:androidannotations-api:$androidannotations"
+
+    testCompile "org.mockito:mockito-all:1.10.19"
+    testCompile "org.hamcrest:hamcrest-all:1.3"
+    testCompile "org.robolectric:robolectric:3.1-rc1"
     testCompile 'junit:junit:4.12'
 }
+apply plugin: 'com.google.gms.google-services'

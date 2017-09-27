@@ -1,6 +1,7 @@
 package com.goodguys.bodyfit.mvp;
 
-import com.goodguys.bodyfit.app.BodyFitApi;
+import com.goodguys.bodyfit.api.AuthApi;
+import com.goodguys.bodyfit.api.UserApi;
 import com.goodguys.bodyfit.mvp.models.auth.AuthResponse;
 import com.goodguys.bodyfit.mvp.models.auth.signin.SignInRegularRequest;
 import com.goodguys.bodyfit.mvp.models.auth.signin.SignInSocialRequest;
@@ -15,29 +16,53 @@ import okhttp3.ResponseBody;
  */
 
 public class BodyFitRepository {
-    private BodyFitApi mBodyFitApi;
+    private AuthApi mAuthApi;
+    private UserApi mUserApi;
 
-    public BodyFitRepository(BodyFitApi bodyFitApi) {
-        mBodyFitApi = bodyFitApi;
+    public BodyFitRepository(AuthApi authApi) {
+        mAuthApi = authApi;
+    }
+
+    public BodyFitRepository(UserApi userApi){
+        mUserApi = userApi;
+
     }
 
     public Observable<AuthResponse> signInRegular(SignInRegularRequest signInRegularRequest){
-        return mBodyFitApi.signInRegular(signInRegularRequest);
+        return mAuthApi.signInRegular(signInRegularRequest);
     }
 
     public Observable<AuthResponse> signInSocial(SignInSocialRequest signInSocialRequest){
-        return mBodyFitApi.signInSocial(signInSocialRequest);
+        return mAuthApi.signInSocial(signInSocialRequest);
     }
 
     public Observable<AuthResponse> signUpRegular(SignUpRegularRequest signUpRegularRequest){
-        return mBodyFitApi.signUpRegular(signUpRegularRequest);
+        return mAuthApi.signUpRegular(signUpRegularRequest);
     }
 
     public Observable<AuthResponse> signUpSocial(SignUpSocialRequest signUpSocialRequest){
-        return mBodyFitApi.signUpSocial(signUpSocialRequest);
+        return mAuthApi.signUpSocial(signUpSocialRequest);
     }
 
     public Observable<ResponseBody> resetPassword(String email){
-        return mBodyFitApi.resetPassword(email);
+        return mAuthApi.resetPassword(email);
     }
+
+    //TODO add all info
+    public Observable getUserStatistics(){
+        return mUserApi.getUserStatistics();
+    }
+
+    public Observable getUserProfile(){
+        return mUserApi.getUserProfile();
+    }
+
+    public Observable updateUserProfile(){
+        return mUserApi.updateUserProfile();
+    }
+
+    public Observable updateUserAvatar(){
+        return mUserApi.updateUserAvatar();
+    }
+
 }
