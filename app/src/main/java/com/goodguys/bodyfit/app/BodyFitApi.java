@@ -20,16 +20,16 @@ import retrofit2.http.Query;
 
 public interface BodyFitApi {
 
-    @POST(Constants.PREF_AUTH + "/signin/regular")
+    @POST(Constants.PREF_AUTH + "/signin/app")
     Observable<AuthResponse> signInRegular(@Body SignInRegularRequest signInRegularRequest);
 
-    @POST(Constants.PREF_AUTH + "/signin/social")
+    @POST(Constants.PREF_AUTH + "/signin/network")
     Observable<AuthResponse> signInSocial(@Body SignInSocialRequest signInSocialRequest);
 
-    @POST(Constants.PREF_AUTH + "/signup/regular")
+    @POST(Constants.PREF_AUTH + "/signup/app")
     Observable<AuthResponse> signUpRegular(@Body SignUpRegularRequest signUpRegularRequest);
 
-    @POST(Constants.PREF_AUTH + "/signup/social")
+    @POST(Constants.PREF_AUTH + "/signup/network")
     Observable<AuthResponse> signUpSocial(@Body SignUpSocialRequest signUpRequest);
 
     @GET(Constants.PREF_AUTH + "/resetpassword")

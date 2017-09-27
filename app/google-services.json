@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "296735778595",
+    "firebase_url": "https://bodyfit-180407.firebaseio.com",
+    "project_id": "bodyfit-180407",
+    "storage_bucket": "bodyfit-180407.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:296735778595:android:7ed2ef64cb4d9651",
+        "android_client_info": {
+          "package_name": "com.goodguys.bodyfit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "296735778595-k71ldq6b2imn7mfd0p41lftr9fpo3k4a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.goodguys.bodyfit",
+            "certificate_hash": "98717343dafe2480ffff3e99361a971d61df6bc4"
+          }
+        },
+        {
+          "client_id": "296735778595-e4t5r92n7m21t8r8vm1khok5p09vvi1s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcwrZwGtGl6eowATOh8pcebToTycA3FSg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "296735778595-e4t5r92n7m21t8r8vm1khok5p09vvi1s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

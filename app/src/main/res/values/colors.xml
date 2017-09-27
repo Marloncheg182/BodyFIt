@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+
+    <!--Default Theme-->
+    <color name="colorPrimary">#526873</color>
+    <color name="colorPrimaryDark">#2b383f</color>
+    <color name="colorPrimaryExtraDark">#232e34</color>
+    <color name="colorPrimaryLight">#CFD8DC</color>
+    <color name="colorAccent">#ff5f2c</color>
+    <color name="colorAccentDark">#e34514</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#757575</color>
+    <color name="colorIcons">#FFFFFF</color>
+    <color name="colorDivider">#BDBDBD</color>
+
+    <!--Social Networks-->
+
+    <color name="colorFacebookNormal">#005faa</color>
+    <color name="colorFacebookPressed">#005293</color>
+    <color name="colorGoogleNormal">#ff0000</color>
+    <color name="colorGooglePressed">#bd3a2f</color>
+    <color name="colorTwitterNormal">#55acee</color>
+    <color name="colorTwitterPressed">#468bc0</color>
 </resources>
